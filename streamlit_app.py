@@ -7,4 +7,4 @@ st.write(
 
 st.markdown("The :orange[Valuation] **Frame**: PB.ROE.")
 
-st.markdown("$$P_{t}=B_{t}\cdot(\frac{P}{B})_{t}$$")
+st.markdown("$\frac{P}{B}$")
