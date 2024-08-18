@@ -7,4 +7,6 @@ st.write(
 
 st.markdown("The :orange[Valuation] **Frame**: PB.ROE.")
 
-st.markdown("$ \frac{P}{B} $")
+st.markdown('''$ 
+            \frac{P}{B} 
+            $''')
