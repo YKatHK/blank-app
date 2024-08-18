@@ -8,5 +8,5 @@ st.write(
 st.markdown("The ==Valuation== **Frame**: PB.ROE.")
 
 st.markdown('''
-    :$$P_{t}=B_{t}\cdot(\frac{P}{B})_{t}$$
+    P_{t}=B_{t}\cdot(\frac{P}{B})_{t}
     ''')
