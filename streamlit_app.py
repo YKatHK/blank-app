@@ -1,5 +1,11 @@
 import streamlit as st
+from pathlib import Path
 
+def blogPath(path_str='blog'):
+    streamlit_path = Path(".").absolute()
+    blog_path = streamlit_path.joinpath(path_str)
+    return blog_path
+    
 st.title("Hi. It's YK.")
 st.write(
     "Welcome to my note space."
@@ -27,6 +33,8 @@ if choice == "Home":
 
 elif choice == "View Posts":
     st.title("View Posts")
-    with open('blog\Beijing Hutongs.md', 'r') as f:
+    blog_path = blogPath()
+    blog_file = blog_path.joinpath('Beijing Hutongs'+'.md').absolute()
+    with open(str(blog_file), 'r') as f:
         markdown_string = f.read()
     st.markdown(markdown_string)
