@@ -14,7 +14,7 @@ choice = st.sidebar.selectbox("Menu", menu)
 if choice == "Home":
     st.title("Hi. It's YK.")
     st.write("Welcome to my note space.")
-    st.write("This is a simple blog app built with streamlit and python."
+    st.write("This is a simple blog app built with streamlit and python.")
     st.write("Enjoy!")
 
 elif choice == "View Posts":
