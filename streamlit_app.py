@@ -69,6 +69,14 @@ elif choice == "Show MD":
         else:
             st.markdown(m_s)
 
+elif choice == "Show MD1":
+    st.title("Show MD1")
+    blog_path = blogPath()
+    blog_file = blog_path.joinpath('Channel Method'+'.md').absolute()
+    with open(str(blog_file), 'r') as f:
+        markdown_string = f.read()
+    st.markdown(markdown_string)
+        
 elif choice == "Show MD2":
     st.title("Show MD2")
     blog_path = blogPath()
