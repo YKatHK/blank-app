@@ -15,6 +15,7 @@ if choice == "Home":
     st.title("Hi. It's YK.")
     st.write(
         "Welcome to my note space.\nThis is a simple blog app built with streamlit and python."
+    )
     st.write("Enjoy!")
 
 elif choice == "View Posts":
