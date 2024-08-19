@@ -38,7 +38,7 @@ def replacePic(md_s, pic_path_str='assets', pic_ext=['jpg', 'png']):
     return md_s
 
 # Create a sidebar menu with different options
-menu = ["Home", "List Posts", "Show MD", "Show MD2", "Latex Example"]
+menu = ["Home", "List Posts", "Show MD", "Show MD1", "Show MD2", "Latex Example"]
 choice = st.sidebar.selectbox("Menu", menu)
 
 # Display the selected option
