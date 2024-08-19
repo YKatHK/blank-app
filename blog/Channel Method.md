@@ -33,6 +33,6 @@ for asset price P1 and P2, forecast m1 and m2 (remark as fm1 and fm2)
 to estimate correlation, select t0 and unitify + detrend, then calculate Cov(R1,R2)
 ###### Process
 >hierarchical clustering classifies assets based on historical m, 
-select uptrend's clusters
-make decisions on sell, hold and buy, based on fm, fc, ff and T
+>select uptrend's clusters
+>make decisions on sell, hold and buy, based on fm, fc, ff and T
 ##### When and what if the forecast is wrong, or cap/floor is broken
