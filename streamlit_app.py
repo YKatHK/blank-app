@@ -22,8 +22,23 @@ def showPic(file_str, pic_path_str='assets', pic_ext=['jpg', 'png']):
     else:
         st.write(f"{fs} is not a picture name")
 
+def replacePic(md_s, pic_path_str='assets', pic_ext=['jpg', 'png']):
+    pic_ns = md_s.split('!')
+    if len(pic_ns) > 1: # pic in markdown
+        blog_path = blogPath()
+        pic_path = blog_path.joinpath(pic_path_str)
+        for pic_s in pic_ns[1:]:
+            p1 = pic_s.split('[[')
+            p2 = p1[-1].split(']]')
+            fs = p2[0]
+            nfs = str(pic_path.joinpath(fs).absolute())
+            #st.write(fs)
+            #st.write(nfs)
+            md_s = md_s.replace(fs, nfs)
+    return md_s
+
 # Create a sidebar menu with different options
-menu = ["Home", "List Posts", "Show MD", "Latex Example"]
+menu = ["Home", "List Posts", "Show MD", "Show MD2", "Latex Example"]
 choice = st.sidebar.selectbox("Menu", menu)
 
 # Display the selected option
@@ -53,6 +68,17 @@ elif choice == "Show MD":
             showPic(m_s)
         else:
             st.markdown(m_s)
+
+elif choice == "Show MD2":
+    st.title("Show MD2")
+    blog_path = blogPath()
+    blog_file = blog_path.joinpath('Channel Method'+'.md').absolute()
+    with open(str(blog_file), 'r') as f:
+        markdown_string = f.read()
+    md_s = replacePic(markdown_string)
+    #st.markdown(md_s)
+    for m_s in md_s.split('\n'):
+        st.markdown(m_s)
 
 elif choice == "Latex Example":
     st.title("Latex Example")
