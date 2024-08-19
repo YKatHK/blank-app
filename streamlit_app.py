@@ -22,23 +22,8 @@ def showPic(file_str, pic_path_str='assets', pic_ext=['jpg', 'png']):
     else:
         st.write(f"{fs} is not a picture name")
 
-def replacePic(md_s, pic_path_str='assets', pic_ext=['jpg', 'png']):
-    pic_ns = md_s.split('!')
-    if len(pic_ns) > 1: # pic in markdown
-        blog_path = blogPath()
-        pic_path = blog_path.joinpath(pic_path_str)
-        for pic_s in pic_ns[1:]:
-            p1 = pic_s.split('[[')
-            p2 = p1[-1].split(']]')
-            fs = p2[0]
-            nfs = str(pic_path.joinpath(fs).absolute())
-            #st.write(fs)
-            #st.write(nfs)
-            md_s = md_s.replace(fs, nfs)
-    return md_s
-
 # Create a sidebar menu with different options
-menu = ["Home", "List Posts", "Show MD", "Show MD1", "Show MD2", "Latex Example"]
+menu = ["Home", "List Posts", "Show MD", "Latex Example"]
 choice = st.sidebar.selectbox("Menu", menu)
 
 # Display the selected option
@@ -51,10 +36,11 @@ if choice == "Home":
 elif choice == "List Posts":
     st.title("List Posts")
     blog_path = blogPath()
-    blog_file = blog_path.joinpath('Channel Method'+'.md').absolute()
-    with open(str(blog_file), 'r') as f:
-        markdown_string = f.read()
-    st.markdown(markdown_string)
+    md_files = list(blog_path.glob('*.md'))
+    for blog_file in md_files:
+        with open(str(blog_file), 'r') as f:
+            markdown_string = f.read()
+        st.write(blog_file)
 
 elif choice == "Show MD":
     st.title("Show MD")
@@ -63,31 +49,27 @@ elif choice == "Show MD":
     with open(str(blog_file), 'r') as f:
         markdown_string = f.read()
     md_s = markdown_string.split('\n')
+    is_block = False
     for m_s in md_s:
-        if '![[' in m_s:
-            showPic(m_s)
+        if len(m_s)>0:
+            if m_s[0] in ['!']:
+                showPic(m_s)
+            elif m_s[0] in ['`']:
+                is_block = not(is_block)
+                if is_block:
+                    block_s = f"{m_s}\n"
+                else:
+                    block_s += f"{m_s}"
+                    st.markdown(block_s)
+            elif is_block:
+                block_s += f"{m_s}\n"
+            else:
+                st.markdown(m_s)
+        elif is_block:
+            block_s += f"{m_s}\n"
         else:
-            st.markdown(m_s)
-
-elif choice == "Show MD1":
-    st.title("Show MD1")
-    blog_path = blogPath()
-    blog_file = blog_path.joinpath('Channel Method'+'.md').absolute()
-    with open(str(blog_file), 'r') as f:
-        markdown_string = f.read()
-    st.markdown(markdown_string)
-        
-elif choice == "Show MD2":
-    st.title("Show MD2")
-    blog_path = blogPath()
-    blog_file = blog_path.joinpath('Channel Method'+'.md').absolute()
-    with open(str(blog_file), 'r') as f:
-        markdown_string = f.read()
-    md_s = replacePic(markdown_string)
-    #st.markdown(md_s)
-    for m_s in md_s.split('\n'):
-        st.markdown(m_s)
-
+            st.markdown('\n')
+    
 elif choice == "Latex Example":
     st.title("Latex Example")
     st.markdown("The :orange[Valuation] **Frame**: PB.ROE.")
