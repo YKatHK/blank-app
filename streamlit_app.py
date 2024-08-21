@@ -1,5 +1,6 @@
 import streamlit as st
 from pathlib import Path
+from datetime import datetime
 
 def blogPath(path_str='blog'):
     main_path = Path(".").absolute()
@@ -22,35 +23,12 @@ def showPic(file_str, pic_path_str='assets', pic_ext=['jpg', 'png']):
     else:
         st.write(f"{fs} is not a picture name")
 
-# Create a sidebar menu with different options
-menu = ["Home", "List Posts", "Show MD", "Latex Example"]
-choice = st.sidebar.selectbox("Menu", menu)
-
-# Display the selected option
-if choice == "Home":
-    st.title("Hi. It's YK.")
-    st.write("Welcome to my note space.")
-    st.write("This is a simple blog app built with streamlit and python.")
-    st.write("Enjoy!")
-
-elif choice == "List Posts":
-    st.title("List Posts")
-    blog_path = blogPath()
-    md_files = list(blog_path.glob('*.md'))
-    for blog_file in md_files:
-        with open(str(blog_file), 'r') as f:
-            markdown_string = f.read()
-        st.write(blog_file)
-
-elif choice == "Show MD":
-    st.title("Show MD")
-    blog_path = blogPath()
-    blog_file = blog_path.joinpath('Channel Method'+'.md').absolute()
-    with open(str(blog_file), 'r') as f:
+def showBlog(md_file):
+    with open(str(md_file), 'r') as f:
         markdown_string = f.read()
     md_s = markdown_string.split('\n')
     is_block = False
-    for m_s in md_s:
+    for m_s in md_s[1:]: # the 1st line of MD is Date
         if len(m_s)>0:
             if m_s[0] in ['!']:
                 showPic(m_s)
@@ -69,13 +47,42 @@ elif choice == "Show MD":
             block_s += f"{m_s}\n"
         else:
             st.markdown('\n')
-    
-elif choice == "Latex Example":
-    st.title("Latex Example")
-    st.markdown("The :orange[Valuation] **Frame**: PB.ROE.")
-    st.markdown(r'''
-            $$P_{t}=B_{t}\cdot(\frac{P}{B})_{t} $$
-            ''')
-    st.markdown(r'''
-            $$\Delta P_{t} = \Delta B_{t}\cdot(\frac{P}{B})_{t} + B_{t}\cdot\Delta(\frac{P}{B})_{t} + \Delta B_{t}\cdot\Delta(\frac{P}{B})_{t}$$
-            ''')
+
+def sortBlogList(md_files):
+    kv = {}
+    for md_file in md_files:
+        with open(str(md_file), 'r') as f:
+            file_date = f.readline()
+        kv[md_file] = datetime.strptime(file_date.strip("\n"), '%Y.%m.%d')
+    kv_sorted = sorted(kv.items(), key=lambda d: d[1], reverse=True)
+    return [k for (k,v) in kv_sorted]
+
+def showBlogList(blogs_path='blog'):
+    blog_path = blogPath(path_str=blogs_path)
+    md_files = list(blog_path.glob('*.md'))
+    md_files = sortBlogList(md_files)
+    for md_file in md_files:
+        md_file_str = str(md_file).split('\\')[-1].split('.')[0]
+        st.subheader(md_file_str)
+        with open(str(md_file), 'r') as f:
+            file_date = f.readline()
+        with st.expander(f":gray[{file_date}]"):
+            showBlog(md_file)
+
+tab1, tab2, tab3 = st.tabs(["Home", "Blogs", "About Me"])
+
+with tab1:
+    st.header("About This App")
+    st.write("Hi. It's YK.")
+    st.write("Welcome to my note space.")
+    st.write("This is a simple blog app built with streamlit and python.")
+
+with tab2:
+    #st.header("Blogs")
+    showBlogList()
+    #md_head = 'Channel Method'
+    #md_file = 'Channel Method'+'.md'
+    #showBlog(md_head, md_file)
+
+with tab3:
+    st.header("About Me")
