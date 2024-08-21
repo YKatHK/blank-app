@@ -62,7 +62,7 @@ def showBlogList(blogs_path='blog'):
     md_files = list(blog_path.glob('*.md'))
     md_files = sortBlogList(md_files)
     for md_file in md_files:
-        md_file_str = str(md_file).split('\\')[-1].split('.')[0]
+        md_file_str = md_file.stem
         st.subheader(md_file_str)
         with open(str(md_file), 'r') as f:
             file_date = f.readline()
