@@ -7,6 +7,7 @@ def blogPath(path_str='blog'):
     blog_path = main_path.joinpath(path_str)
     return blog_path
 
+@st.cache_resource
 def showPic(file_str, pic_path_str='assets', pic_ext=['jpg', 'png']):
     fs = file_str.split('.')
     f_ext = fs[-1]
@@ -23,6 +24,7 @@ def showPic(file_str, pic_path_str='assets', pic_ext=['jpg', 'png']):
     else:
         st.write(f"{fs} is not a picture name")
 
+@st.cache_resource
 def showBlog(md_file):
     with open(str(md_file), 'r') as f:
         markdown_string = f.read()
@@ -69,20 +71,25 @@ def showBlogList(blogs_path='blog'):
         with st.expander(f":gray[{file_date}]"):
             showBlog(md_file)
 
-tab1, tab2, tab3 = st.tabs(["Home", "Blogs", "About Me"])
-
-with tab1:
+def tabHome():
     st.header("About This App")
     st.write("Hi. It's YK.")
     st.write("Welcome to my note space.")
     st.write("This is a simple blog app built with streamlit and python.")
 
-with tab2:
-    #st.header("Blogs")
-    showBlogList()
-    #md_head = 'Channel Method'
-    #md_file = 'Channel Method'+'.md'
-    #showBlog(md_head, md_file)
+tabHome, tabNotes, tabSmartBeta, tabSmartAlpha = st.tabs(["Home", "Notes", "Smart Beta", "Smart Alpha"])
 
-with tab3:
-    st.header("About Me")
+with tabHome:
+    st.header("About This App")
+    st.write("Hi. It's YK.")
+    st.write("Welcome to my note space.")
+    st.write("This is a simple blog app built with streamlit and python.")
+
+with tabNotes:
+    showBlogList()
+
+with tabSmartBeta:
+    st.header("Smart Beta Portfolio")
+
+with tabSmartAlpha:
+    st.header("Smart Alpha Portfolio")
