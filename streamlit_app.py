@@ -2,6 +2,14 @@ import streamlit as st
 from pathlib import Path
 from datetime import datetime
 
+st.set_page_config(
+        page_title="NoteChain",
+        layout="wide",
+        initial_sidebar_state="auto",
+        menu_items=None,
+    )
+#st.title("NoteChain")
+
 def blogPath(path_str='blog'):
     main_path = Path(".").absolute()
     blog_path = main_path.joinpath(path_str)
@@ -70,12 +78,6 @@ def showBlogList(blogs_path='blog'):
             file_date = f.readline()
         with st.expander(f":gray[{file_date}]"):
             showBlog(md_file)
-
-def tabHome():
-    st.header("About This App")
-    st.write("Hi. It's YK.")
-    st.write("Welcome to my note space.")
-    st.write("This is a simple blog app built with streamlit and python.")
 
 tabHome, tabNotes, tabSmartBeta, tabSmartAlpha = st.tabs(["Home", "Notes", "Smart Beta", "Smart Alpha"])
 
