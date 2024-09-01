@@ -79,7 +79,7 @@ def showBlogList(blogs_path='blog'):
         with st.expander(f":gray[{file_date}]"):
             showBlog(md_file)
 
-tabHome, tabNotes, tabSmartBeta, tabSmartAlpha = st.tabs(["Home", "Notes", "Smart Beta", "Smart Alpha"])
+tabHome, tabNotes, tabSmartChannel, tabSmartBeta, tabSmartAlpha = st.tabs(["Home", "Notes","Smart Channel", "Smart Beta", "Smart Alpha"])
 
 with tabHome:
     st.header("About This App")
@@ -89,6 +89,9 @@ with tabHome:
 
 with tabNotes:
     showBlogList()
+
+with tabSmartChannel:
+    st.header("Smart Channel Asset")
 
 with tabSmartBeta:
     st.header("Smart Beta Portfolio")
