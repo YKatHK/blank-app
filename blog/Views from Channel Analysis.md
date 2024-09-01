@@ -2,11 +2,9 @@
 ##### Asset Pricing
 $$P_{t} = Trend_{t} + Cycle_{t} + Fluctuate_{t}$$
 from PB.ROE valuation frame: 
-$$\begin{matrix}  
-  E(R)_{t} & = & E(\frac{\Delta P_{t}}{P_{t}}) & = & E(ROE)_{t} & + & E(\frac{\Delta(\frac{P}{B})_{t}}{(\frac{P}{B})_{t}})\\
-  & & & & \downarrow & & \downarrow \\
-  & & & & ^{Business}_{Trend} & & ^{Cycle+}_{Fluctuate}
-\end{matrix}$$
+$$ E(R)_{t} = E(\frac{\Delta P_{t}}{P_{t}}) = E(ROE)_{t} +  E(\frac{\Delta(\frac{P}{B})_{t}}{(\frac{P}{B})_{t}})$$
+$$ E(ROE)_{t} \longleftarrow Trend_{t}$$
+$$ E(\frac{\Delta(\frac{P}{B})_{t}}{(\frac{P}{B})_{t}}) \longleftarrow Cycle_{t}+Fluctuate_{t}$$
 ##### Channel Model
 ![[IBM_Channel_BrianMillard_p204.JPG]]
 where: 
